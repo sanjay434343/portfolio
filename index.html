@@ -285,36 +285,185 @@ nav {
 .stack-pill:hover { border-color: var(--signal); color: var(--signal); background: var(--signal-bg); }
 
 /* ─────────────────────────────────────────
-   MARQUEE STRIP
+   CHESSBOARD TICKER
 ───────────────────────────────────────── */
-.marquee-wrap {
+.chess-ticker {
   overflow: hidden;
+  width: 100%;
+  user-select: none;
+  display: flex;
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
-  background: var(--paper-2);
-  padding: 18px 0;
 }
-.marquee-track {
+.chess-track {
   display: flex;
-  gap: 0;
-  animation: marquee 28s linear infinite;
+  align-items: stretch;
   white-space: nowrap;
+  flex-shrink: 0;
+  animation: chessFwd 38s linear infinite;
 }
-.marquee-track span {
+.chess-track:hover { animation-play-state: paused; }
+.chess-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 40px;
   font-family: var(--font-head);
   font-size: 0.95rem;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--ink-3);
-  padding: 0 36px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   flex-shrink: 0;
+  white-space: nowrap;
+  transition: opacity 0.2s;
 }
-.marquee-track strong {
-  font-style: normal;
+.chess-cell:hover { opacity: 0.75; }
+/* alternating: odd = black, even = white */
+.chess-cell:nth-child(odd)  { background: var(--ink);   color: #ffffff; }
+.chess-cell:nth-child(even) { background: var(--paper);  color: var(--ink); border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+.chess-cell .chess-sub {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 400;
+  font-style: italic;
+  opacity: 0.5;
+  margin-top: 2px;
+  letter-spacing: 0.04em;
+  font-family: var(--font-body);
+}
+@keyframes chessFwd { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─────────────────────────────────────────
+   ABOUT SECTION
+───────────────────────────────────────── */
+#about { background: var(--paper); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.about-photo-col {}
+.about-photo-wrap {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  position: relative;
+}
+.about-photo-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.about-photo-placeholder {
+  width: 100%; height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--ink-4);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 32px;
+  position: absolute; inset: 0;
+}
+.about-photo-placeholder svg {
+  width: 56px; height: 56px;
+  opacity: 0.25;
+}
+.about-photo-placeholder span {
+  font-size: 0.75rem;
+  color: var(--ink-4);
+  max-width: 160px;
+  line-height: 1.6;
+}
+.about-photo-note {
+  margin-top: 14px;
+  font-size: 0.75rem;
+  color: var(--ink-4);
+  text-align: center;
+  line-height: 1.6;
+}
+.about-photo-note code {
+  font-size: 0.72rem;
+  background: var(--paper-3);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: var(--signal);
+  font-family: 'Courier New', monospace;
+}
+.about-content {}
+.about-greeting {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 14px;
+}
+.about-headline {
+  font-family: var(--font-head);
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+.about-headline em {
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink-3);
+}
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.about-body p {
+  font-size: 0.975rem;
+  color: var(--ink-2);
+  line-height: 1.8;
+}
+.about-body p strong { color: var(--ink); font-weight: 600; }
+.about-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.about-fact {
+  background: var(--paper-2);
+  padding: 20px 22px;
+}
+.about-fact-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 4px;
+}
+.about-fact-value {
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--ink);
 }
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.about-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-photo-wrap { aspect-ratio: 1/1; max-width: 280px; }
+}
 
 /* ─────────────────────────────────────────
    SECTION LAYOUT
@@ -803,6 +952,7 @@ footer {
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">Sanjay<span>.</span></a>
     <ul class="nav-links">
+      <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#experience">Experience</a></li>
@@ -872,32 +1022,123 @@ footer {
   </div>
 </section>
 
-<!-- ─── MARQUEE ───────────────────────────── -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span><strong>Flutter</strong></span><span>·</span>
-    <span><strong>Firebase</strong></span><span>·</span>
-    <span><strong>Python</strong></span><span>·</span>
-    <span><strong>YOLOv5</strong></span><span>·</span>
-    <span><strong>Node.js</strong></span><span>·</span>
-    <span><strong>AI &amp; ML</strong></span><span>·</span>
-    <span><strong>Dart</strong></span><span>·</span>
-    <span><strong>Local LLM</strong></span><span>·</span>
-    <span><strong>Computer Vision</strong></span><span>·</span>
-    <span><strong>IoT</strong></span><span>·</span>
-    <!-- duplicate for seamless loop -->
-    <span><strong>Flutter</strong></span><span>·</span>
-    <span><strong>Firebase</strong></span><span>·</span>
-    <span><strong>Python</strong></span><span>·</span>
-    <span><strong>YOLOv5</strong></span><span>·</span>
-    <span><strong>Node.js</strong></span><span>·</span>
-    <span><strong>AI &amp; ML</strong></span><span>·</span>
-    <span><strong>Dart</strong></span><span>·</span>
-    <span><strong>Local LLM</strong></span><span>·</span>
-    <span><strong>Computer Vision</strong></span><span>·</span>
-    <span><strong>IoT</strong></span><span>·</span>
+<!-- ─── CHESSBOARD TICKER ─────────────────── -->
+<div class="chess-ticker" aria-hidden="true">
+  <div class="chess-track">
+    <!-- set 1 -->
+    <div class="chess-cell">Flutter<span class="chess-sub">mobile / web</span></div>
+    <div class="chess-cell">Python<span class="chess-sub">AI & automation</span></div>
+    <div class="chess-cell">Firebase<span class="chess-sub">realtime backend</span></div>
+    <div class="chess-cell">YOLOv5<span class="chess-sub">computer vision</span></div>
+    <div class="chess-cell">Dart<span class="chess-sub">language</span></div>
+    <div class="chess-cell">Node.js<span class="chess-sub">server-side</span></div>
+    <div class="chess-cell">Ollama<span class="chess-sub">local LLM</span></div>
+    <div class="chess-cell">AI & ML<span class="chess-sub">core focus</span></div>
+    <div class="chess-cell">REST APIs<span class="chess-sub">integration</span></div>
+    <div class="chess-cell">IoT<span class="chess-sub">hardware + cloud</span></div>
+    <div class="chess-cell">Clean Arch<span class="chess-sub">architecture</span></div>
+    <div class="chess-cell">BLoC<span class="chess-sub">state mgmt</span></div>
+    <!-- set 2 — exact duplicate for seamless loop -->
+    <div class="chess-cell">Flutter<span class="chess-sub">mobile / web</span></div>
+    <div class="chess-cell">Python<span class="chess-sub">AI & automation</span></div>
+    <div class="chess-cell">Firebase<span class="chess-sub">realtime backend</span></div>
+    <div class="chess-cell">YOLOv5<span class="chess-sub">computer vision</span></div>
+    <div class="chess-cell">Dart<span class="chess-sub">language</span></div>
+    <div class="chess-cell">Node.js<span class="chess-sub">server-side</span></div>
+    <div class="chess-cell">Ollama<span class="chess-sub">local LLM</span></div>
+    <div class="chess-cell">AI & ML<span class="chess-sub">core focus</span></div>
+    <div class="chess-cell">REST APIs<span class="chess-sub">integration</span></div>
+    <div class="chess-cell">IoT<span class="chess-sub">hardware + cloud</span></div>
+    <div class="chess-cell">Clean Arch<span class="chess-sub">architecture</span></div>
+    <div class="chess-cell">BLoC<span class="chess-sub">state mgmt</span></div>
   </div>
 </div>
+
+<!-- ─── ABOUT ─────────────────────────────── -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="section-eyebrow">About</span>
+      <div class="section-rule"></div>
+      <h2 class="section-title">The person <em>behind the code</em></h2>
+    </div>
+
+    <div class="about-grid">
+
+      <!-- Photo column -->
+      <div class="about-photo-col">
+        <div class="about-photo-wrap">
+          <!-- 
+            TO ADD YOUR PHOTO:
+            Replace this div with: <img src="your-photo.jpg" alt="Sanjay M">
+          -->
+          <div class="about-photo-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+            <span>Add your photo here<br>Replace this block with an <code>&lt;img&gt;</code> tag</span>
+          </div>
+        </div>
+        <p class="about-photo-note">
+          Replace the placeholder with<br>
+          <code>&lt;img src="photo.jpg"&gt;</code>
+        </p>
+      </div>
+
+      <!-- Content column -->
+      <div class="about-content">
+        <div class="about-greeting">Hey, I'm Sanjay 👋</div>
+        <h3 class="about-headline">I build apps that<br><em>actually ship.</em></h3>
+
+        <div class="about-body">
+          <p>
+            I'm a final-year <strong>BSc AI & ML student</strong> at NGM College, Bharathiar University — graduating June 2026. I've spent the last two years building and deploying production-grade apps, not just course projects. From a music streaming platform to an offline AI resume generator used by 250+ students on my own campus.
+          </p>
+          <p>
+            My core stack is <strong>Flutter + Firebase + Python</strong>. I care about clean architecture, readable code, and apps that feel fast on real devices. I did my internship at <strong>VVDN Technologies</strong> on the Computer Vision team, working on YOLOv5-based production models.
+          </p>
+          <p>
+            Outside the screen: I'm from <strong>Pollachi, Tamil Nadu</strong> — a small city near Coimbatore. That's shaped how I think about building software for markets that aren't just metros. I also run small automation and web development projects for local SMEs in the region.
+          </p>
+        </div>
+
+        <div class="about-facts">
+          <div class="about-fact">
+            <div class="about-fact-label">Location</div>
+            <div class="about-fact-value">Pollachi, Tamil Nadu</div>
+          </div>
+          <div class="about-fact">
+            <div class="about-fact-label">University</div>
+            <div class="about-fact-value">Bharathiar University</div>
+          </div>
+          <div class="about-fact">
+            <div class="about-fact-label">Degree</div>
+            <div class="about-fact-value">BSc AI & ML · 80%</div>
+          </div>
+          <div class="about-fact">
+            <div class="about-fact-label">Internship</div>
+            <div class="about-fact-value">VVDN Technologies</div>
+          </div>
+          <div class="about-fact">
+            <div class="about-fact-label">Languages spoken</div>
+            <div class="about-fact-value">Tamil · English</div>
+          </div>
+          <div class="about-fact">
+            <div class="about-fact-label">Status</div>
+            <div class="about-fact-value" style="color:var(--signal-2);">● Open to work · June 2026</div>
+          </div>
+        </div>
+
+        <div class="about-actions">
+          <a href="#contact" class="btn btn-dark">Get in touch →</a>
+          <a href="https://sanjay-m.netlify.app" target="_blank" class="btn btn-ghost">Portfolio ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- ─── SKILLS ────────────────────────────── -->
 <section class="section section--alt" id="skills">
